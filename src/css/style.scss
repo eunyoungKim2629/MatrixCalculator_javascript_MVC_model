@@ -1,14 +1,3 @@
 @import 'reset';
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-div.app {
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content: center;
-  align-items: center;
-}
+@import 'variable';
+@import 'mixin';
