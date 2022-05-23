@@ -9,7 +9,7 @@ export default class {
 		const sectionMatrixContainer = createElement('SECTION');
 		sectionMatrixContainer.className = 'sectionMatrixContainer';
 
-		sectionMatrixContainer.append(this.printMatrixTopContainer(),this.printMatrixBottomContainer());
+		sectionMatrixContainer.append(this.printMatrixTopContainer(), this.printMatrixBottomContainer());
 
 		return sectionMatrixContainer;
 	}
@@ -22,21 +22,29 @@ export default class {
 	printMatrixTopContainer() {
 		const divTopNormalMatrixContainer = createElement('DIV');
 		divTopNormalMatrixContainer.className = 'divTopNormalMatrixContainer';
+		divTopNormalMatrixContainer.appendChild(this.printDisplayMatrixContainer());
 
 		return divTopNormalMatrixContainer;
 	}
 	printDisplayMatrixContainer() {
-		return;
+		const divDisplayMatrixContainer = createElement('DIV');
+		divDisplayMatrixContainer.className = 'divDisplayMatrixContainer';
+
+		return divDisplayMatrixContainer;
 	}
 	printMatrixBottomContainer() {
 		const divBottomNormalMatrixContainer = createElement('DIV');
 		const divBottomTopNormalMatrixContainer = createElement('DIV');
 		const divBottomBottomNormalMatrixContainer = createElement('DIV');
 
+		divBottomNormalMatrixContainer.className = 'divBottomNormalMatrixContainer';
+		divBottomTopNormalMatrixContainer.className = 'divBottomTopNormalMatrixContainer';
+		divBottomBottomNormalMatrixContainer.className = 'divBottomBottomNormalMatrixContainer';
+
 		divBottomTopNormalMatrixContainer.appendChild(this.printRowAndColContainer());
 		divBottomBottomNormalMatrixContainer.appendChild(this.printButtonContainer());
 
-		divBottomNormalMatrixContainer.append(this.printTitle(), divBottomTopNormalMatrixContainer,divBottomBottomNormalMatrixContainer);
+		divBottomNormalMatrixContainer.append(this.printTitle(), divBottomTopNormalMatrixContainer, divBottomBottomNormalMatrixContainer);
 
 		return divBottomNormalMatrixContainer;
 	}
@@ -60,7 +68,7 @@ export default class {
 		const buttonDeleteNormalMatrixContainer = this.printButton('buttonDeleteNormalMatrixContainer', 'fa-solid fa-trash-can iTrashCan');
 
 		buttonCreateNormalMatrix.className = 'buttonCreateNormalMatrix';
-	
+
 		const fragment = combineElement([buttonCreateNormalMatrix, buttonRandomNormalMatrixContainer, buttonDeleteNormalMatrixContainer]);
 
 		return fragment;

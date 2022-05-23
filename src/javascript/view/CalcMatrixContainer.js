@@ -1,4 +1,4 @@
-import Constants from '../model/Constants.js';
+import Controller from '../controller/Controller.js';
 import { createElement } from '../utils/ElementTool.js';
 
 export default Object.freeze({
@@ -12,34 +12,31 @@ export default Object.freeze({
 	},
 	printMatrixTopContainer() {
 		const divTopCalcMatrixContainer = createElement('DIV');
+		const divTopCalcMatrixButtonContainer = createElement('DIV');
+
 		divTopCalcMatrixContainer.className = 'divTopCalcMatrixContainer';
+		divTopCalcMatrixButtonContainer.className = 'divTopCalcMatrixButtonContainer';
+
+		divTopCalcMatrixButtonContainer.append(
+			this.printMatrixButtonContainer('buttonCalcPlus', 'fa-solid fa-square-plus iCalcPlus'),
+			this.printMatrixButtonContainer('buttonCalcMinus','fa-solid fa-square-minus iCalcMinus'),
+			this.printMatrixButtonContainer('buttonCalcMultiply', 'fa-solid fa-square-xmark iCalcMultiply')
+		);
+		divTopCalcMatrixContainer.append(this.printTitle(), this.printAuthor(), divTopCalcMatrixButtonContainer);
 
 		return divTopCalcMatrixContainer;
 	},
-	printDisplayMatrixContainer() {
-		return;
-	},
-	printMatrixBottomContainer() {
-		const divBottomCalcMatrixContainer = createElement('DIV');
-		const divBottomCalcMatrixButtonContainer = createElement('DIV');
-
-		divBottomCalcMatrixContainer.className = 'divBottomCalcMatrixContainer';
-		divBottomCalcMatrixButtonContainer.className = 'divBottomCalcMatrixButtonContainer';
-
-		divBottomCalcMatrixButtonContainer.append(
-			this.printMatrixButtonContainer('buttonCalcPlus', 'fa-solid fa-square-plus iCalcPlus'),
-			this.printMatrixButtonContainer('buttonCalcMinus', 'fa-solid fa-square-minus iCalcMinus'),
-			this.printMatrixButtonContainer('buttonCalcMultiply', 'fa-solid fa-square-xmark iCalcMultiply')
-		);
-		divBottomCalcMatrixContainer.append(this.printTitle(), divBottomCalcMatrixButtonContainer);
-
-		return divBottomCalcMatrixContainer;
-	},
 	printTitle() {
-		const h1CalcMatrixTitle = createElement('H1', Constants.CALC_MATRIX.CALC_MATRIX_TITLE);
+		const h1CalcMatrixTitle = createElement('H1', Controller.CALC_MATRIX.CALC_MATRIX_TITLE);
 		h1CalcMatrixTitle.className = 'h1CalcMatrixTitle';
-
+		
 		return h1CalcMatrixTitle;
+	},
+	printAuthor() {
+		const h2ClcMatrixAuthor = createElement('H2', `create by ${Controller.CALC_MATRIX.AUTHOR[0]}, ${Controller.CALC_MATRIX.AUTHOR[1]}`);
+		h2ClcMatrixAuthor.className = 'h2ClcMatrixAuthor';
+
+		return h2ClcMatrixAuthor;
 	},
 	printMatrixButtonContainer(firstArg, iCalcClassName) {
 		const buttonCalcMatrixContainer = createElement('BUTTON');
@@ -51,5 +48,18 @@ export default Object.freeze({
 		buttonCalcMatrixContainer.appendChild(iCalc);
 
 		return buttonCalcMatrixContainer;
+	},
+	printMatrixBottomContainer() {
+		const divBottomCalcMatrixContainer = createElement('DIV');
+		divBottomCalcMatrixContainer.className = 'divBottomCalcMatrixContainer';
+		divBottomCalcMatrixContainer.appendChild(this.printDisplayMatrixContainer());
+
+		return divBottomCalcMatrixContainer;
+	},
+	printDisplayMatrixContainer() {
+		const divDisplayMatrixContainer = createElement('DIV');
+		divDisplayMatrixContainer.className = 'divDisplayMatrixContainer';
+
+		return divDisplayMatrixContainer;
 	},
 });

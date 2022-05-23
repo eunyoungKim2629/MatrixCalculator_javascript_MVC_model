@@ -9,7 +9,7 @@ export default class {
   }
   init() {
     const normalFirstMatrixContainer = new NormalMatrixContainer('First Matrix')
-    const normalSecondMatrixContainer = new NormalMatrixContainer
+    const normalSecondMatrixContainer = new NormalMatrixContainer('Second Matrix')
     
     $('#app').append(normalFirstMatrixContainer.printNormalMatrixContainer(), normalSecondMatrixContainer.printNormalMatrixContainer(), CalcMatrixContainer.printCalcMatrixContainer());
   }
