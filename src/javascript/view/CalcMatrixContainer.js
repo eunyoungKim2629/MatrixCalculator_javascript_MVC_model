@@ -34,7 +34,7 @@ export default Object.freeze({
 	},
 	printAuthor() {
 		const h2ClcMatrixAuthor = createElement('H2', `create by ${Controller.CALC_MATRIX.AUTHOR[0]}, ${Controller.CALC_MATRIX.AUTHOR[1]}`);
-		h2ClcMatrixAuthor.className = 'h2ClcMatrixAuthor';
+		h2ClcMatrixAuthor.className = 'h2CalcMatrixAuthor';
 
 		return h2ClcMatrixAuthor;
 	},

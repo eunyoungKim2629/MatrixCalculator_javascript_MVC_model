@@ -15,7 +15,7 @@ export default class {
 	}
 	printTitle() {
 		const h1NormalMatrixTitle = createElement('H1', this.h1NormalMatrixTitleText);
-		h1NormalMatrixTitle.className = 'h1NormalMatrixTile';
+		h1NormalMatrixTitle.className = 'h1NormalMatrixTitle';
 
 		return h1NormalMatrixTitle;
 	}

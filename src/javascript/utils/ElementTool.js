@@ -11,7 +11,7 @@ export const createElement = (tagName, tagText = '') => {
 
 export const combineElement = (elements) => {
 	const fragment = document.createDocumentFragment();
-	elements.forEach((element) => fragment.append(element));
+	elements.forEach((element) => void fragment.append(element));
 	
   return fragment;
 };
@@ -22,4 +22,4 @@ export const removeElements = (parentSelector, selfSelector) =>
 	void document
 		.querySelector(parentSelector)
 		.querySelector(selfSelector)
-		.forEach((element) => element.remove());
+		.forEach((element) => void element.remove());
