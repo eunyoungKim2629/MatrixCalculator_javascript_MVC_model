@@ -1,9 +1,10 @@
 import Controller from '../controller/Controller.js';
-import { combineElement, createElement } from '../utils/ElementTool.js';
+import { $, $$, combineElement, createElement } from '../utils/ElementTool.js';
 
-export default class {
+export default class NormalMatrixContainer {
 	constructor(h1NormalMatrixTitleText) {
 		this.h1NormalMatrixTitleText = h1NormalMatrixTitleText;
+		this.toggleButtonsHandler = true;
 	}
 	printNormalMatrixContainer() {
 		const sectionMatrixContainer = createElement('SECTION');
@@ -31,6 +32,37 @@ export default class {
 		divDisplayMatrixContainer.className = 'divDisplayMatrixContainer';
 
 		return divDisplayMatrixContainer;
+	}
+	static createInputMatrixItem() {
+		const inputMatrixItem = createElement('INPUT');
+
+		inputMatrixItem.className = 'inputMatrixItem';
+
+		inputMatrixItem.setAttribute('value', '0');
+		inputMatrixItem.setAttribute('maxLength', '3');
+
+		return inputMatrixItem;
+	}
+	static createBr() {
+		return createElement('BR');
+	}
+	static createInputMatrixItems(rowValue, colValue) {
+		const elements = new Array(rowValue).fill(0).map(() => new Array(colValue).fill(0).map(() => NormalMatrixContainer.createInputMatrixItem()));
+		elements.forEach((arr) => void arr.push(NormalMatrixContainer.createBr()));
+
+		return elements.flat();
+	}
+	static resetInputMatrixItems(index) {
+		$$('.divDisplayMatrixContainer')
+			[index].querySelectorAll('input')
+			?.forEach((input) => void input.remove());
+		$$('.divDisplayMatrixContainer')
+			[index].querySelectorAll('br')
+			?.forEach((br) => void br.remove());
+	}
+	static printInputMatrixItems(elements, index) {
+		NormalMatrixContainer.resetInputMatrixItems(index);
+		$$('.divDisplayMatrixContainer')[index].appendChild(combineElement(elements));
 	}
 	printMatrixBottomContainer() {
 		const divBottomNormalMatrixContainer = createElement('DIV');
@@ -83,5 +115,19 @@ export default class {
 		buttonNormal.appendChild(iNormal);
 
 		return buttonNormal;
+	}
+	toggleButtons(index) {
+		if (this.toggleButtonsHandler) {
+			$$('.buttonCreateNormalMatrix')[index].style.display = 'none';
+			$$('.buttonDeleteNormalMatrixContainer')[index].style.display = 'inline-block';
+			$$('.buttonRandomNormalMatrixContainer')[index].style.display = 'inline-block';
+			this.toggleButtonsHandler = false;
+		} else {
+			$$('.buttonCreateNormalMatrix')[index].style.display = 'inline-block';
+			$$('.buttonDeleteNormalMatrixContainer')[index].style.display = 'none';
+			$$('.buttonRandomNormalMatrixContainer')[index].style.display = 'none';
+			this.toggleButtonsHandler = true;
+		}
+		console.log(this.toggleButtonsHandler);
 	}
 }
