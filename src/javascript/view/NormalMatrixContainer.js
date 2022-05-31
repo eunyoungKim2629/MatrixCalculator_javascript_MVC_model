@@ -46,12 +46,6 @@ export default class NormalMatrixContainer {
 	static createBr() {
 		return createElement('BR');
 	}
-	static createInputMatrixItems(rowValue, colValue) {
-		const elements = new Array(rowValue).fill(0).map(() => new Array(colValue).fill(0).map(() => NormalMatrixContainer.createInputMatrixItem()));
-		elements.forEach((arr) => void arr.push(NormalMatrixContainer.createBr()));
-
-		return elements.flat();
-	}
 	static resetInputMatrixItems(index) {
 		$$('.divDisplayMatrixContainer')
 			[index].querySelectorAll('input')
@@ -60,9 +54,34 @@ export default class NormalMatrixContainer {
 			[index].querySelectorAll('br')
 			?.forEach((br) => void br.remove());
 	}
+	static createInputMatrixItems(rowValue, colValue) {
+		const elements = new Array(rowValue).fill(0).map(() => new Array(colValue).fill(0).map(() => NormalMatrixContainer.createInputMatrixItem()));
+		elements.forEach((arr) => void arr.push(NormalMatrixContainer.createBr()));
+
+		return elements.flat();
+	}
 	static printInputMatrixItems(elements, index) {
-		NormalMatrixContainer.resetInputMatrixItems(index);
 		$$('.divDisplayMatrixContainer')[index].appendChild(combineElement(elements));
+	}
+	static printRandomNumber() {
+		return Math.floor(Math.random() * 2) ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
+	}
+	static inputRandomNumber(index) {
+		$$('.divDisplayMatrixContainer')
+			[index].querySelectorAll('.inputMatrixItem')
+			.forEach((input) => void (input.value = NormalMatrixContainer.printRandomNumber()));
+	}
+	static resetInputRowAndCol(index) {
+		$$('.inputNormalMatrixRow')[index].value = '';
+		$$('.inputNormalMatrixCol')[index].value = '';
+	}
+	static setReadOnly(index) {
+		$$('.inputNormalMatrixRow')[index].setAttribute('readOnly', 'readOnly');
+		$$('.inputNormalMatrixCol')[index].setAttribute('readOnly', 'readOnly');
+	}
+	static setNotReadOnly(index) {
+		$$('.inputNormalMatrixRow')[index].removeAttribute('readOnly');
+		$$('.inputNormalMatrixCol')[index].removeAttribute('readOnly');
 	}
 	printMatrixBottomContainer() {
 		const divBottomNormalMatrixContainer = createElement('DIV');
@@ -89,6 +108,9 @@ export default class NormalMatrixContainer {
 
 		inputNormalMatrixRow.setAttribute('placeholder', Controller.GENERAL_MATRIX.ROW_KEYWORD);
 		inputNormalMatrixCol.setAttribute('placeholder', Controller.GENERAL_MATRIX.COL_KEYWORD);
+
+		inputNormalMatrixRow.setAttribute('maxLength', '1');
+		inputNormalMatrixCol.setAttribute('maxLength', '1');
 
 		const fragment = combineElement([inputNormalMatrixRow, inputNormalMatrixCol]);
 
@@ -127,7 +149,7 @@ export default class NormalMatrixContainer {
 			$$('.buttonDeleteNormalMatrixContainer')[index].style.display = 'none';
 			$$('.buttonRandomNormalMatrixContainer')[index].style.display = 'none';
 			this.toggleButtonsHandler = true;
+			console.log(this.h1NormalMatrixTitleText, this.toggleButtonsHandler);
 		}
-		console.log(this.toggleButtonsHandler);
 	}
 }
