@@ -1,5 +1,5 @@
 import Controller from '../controller/Controller.js';
-import { combineElement, createElement } from '../utils/ElementTool.js';
+import { $, $$, combineElement, createElement } from '../utils/ElementTool.js';
 
 export default Object.seal({
 	calcHandler :true,
@@ -76,7 +76,7 @@ export default Object.seal({
 		return createElement('BR');
 	},
 	createInputCalcMatrixItems(rowValue, colValue) {
-		let elements = new Array(rowValue).fill(0).map(() => new Array(colValue).fill(0).map(() => this.createInputMatrixItem()));
+		let elements = new Array(+rowValue).fill(0).map(() => new Array(+colValue).fill(0).map(() => this.createInputMatrixItem()));
 		elements.forEach((arr) => void arr.push(this.createBr()));
 		elements = elements.flat();
 
@@ -87,7 +87,7 @@ export default Object.seal({
 		$$('.divDisplayCalcMatrixContainer br')?.forEach((br) => void br.remove());
 	},
 	printInputMatrixItems(elements) {
-		this.resetInputMatrixItems(index);
+		this.resetInputMatrixItems();
 		$('.divDisplayCalcMatrixContainer').append(combineElement(elements));
 	},
 });
