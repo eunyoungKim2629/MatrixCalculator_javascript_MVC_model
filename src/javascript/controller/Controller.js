@@ -71,31 +71,25 @@ export default Object.freeze({
 		$$('.buttonRandomNormalMatrixContainer').forEach((button, index) => void button.addEventListener('click', () => void NormalMatrixContainer.inputRandomNumber(index)));
 	},
 	confirmExistMatrix() {
-		if (CalcMatrixContainer.calcHandler && $$('.divDisplayMatrixContainer').some((divDisplay) => divDisplay.querySelector('input') == null)) {
+		if (CalcMatrixContainer.calcHandler && $$('.divDisplayMatrixContainer').some(divDisplay => divDisplay.querySelector('input') == null)) {
 			Modal.printModal(Constants.WARNING_KEYWORD.WARNING07);
 			CalcMatrixContainer.calcHandler = false;
 		}
 	},
 	confirmSameRowAndCol(modalText) {
-		if (
-			CalcMatrixContainer.calcHandler &&
-			($$('.inputNormalMatrixRow')[0].value !== $$('.inputNormalMatrixRow')[1].value || $$('.inputNormalMatrixCol')[0].value !== $$('.inputNormalMatrixCol')[1].value)
-		) {
+		if (CalcMatrixContainer.calcHandler && ($$('.inputNormalMatrixRow')[0].value !== $$('.inputNormalMatrixRow')[1].value || $$('.inputNormalMatrixCol')[0].value !== $$('.inputNormalMatrixCol')[1].value)) {
 			Modal.printModal(modalText); // 행렬의 덧셈을 위해서 행과 열을 같게 해주세요 // 행렬의 마이너스를 위해서 행과 열을 같게 해주세요
 			CalcMatrixContainer.calcHandler = false;
 		}
 	},
 	confirmWrongValue() {
-		if (
-			CalcMatrixContainer.calcHandler &&
-			$$('.divDisplayMatrixContainer').some((divDisplay) => Array.from(divDisplay.querySelectorAll('input')).some((input) => !/^-?\d{1}$|^-?\d{2}$/g.test(input.value)))
-		) {
+		if (CalcMatrixContainer.calcHandler && $$('.divDisplayMatrixContainer').some(divDisplay => Array.from(divDisplay.querySelectorAll('input')).some(input => !/^-?\d{1}$|^-?\d{2}$/g.test(input.value)))) {
 			Modal.printModal(Constants.WARNING_KEYWORD.WARNING03);
 			CalcMatrixContainer.calcHandler = false;
 		}
 	},
 	confirmThreeFigures() {
-		if (CalcMatrixContainer.calcHandler && $$('.divDisplayMatrixContainer').some((divDisplay) => Array.from(divDisplay.querySelectorAll('input')).some((input) => /^\d{3}$/g.test(input.value)))) {
+		if (CalcMatrixContainer.calcHandler && $$('.divDisplayMatrixContainer').some(divDisplay => Array.from(divDisplay.querySelectorAll('input')).some(input => /^\d{3}$/g.test(input.value)))) {
 			Modal.printModal(Constants.WARNING_KEYWORD.WARNING03);
 			CalcMatrixContainer.calcHandler = false;
 		}
@@ -105,31 +99,51 @@ export default Object.freeze({
 		this.confirmSameRowAndCol(modalText);
 		this.confirmWrongValue();
 		this.confirmThreeFigures();
-		if (CalcMatrixContainer.calcHandler) {
-			console.log('good');
-		} else {
-			console.log('bad');
-		}
+	},
+	getFirstMatrixInputValues() {
+		const rowValue = $$('.inputNormalMatrixRow')[0].value;
+		const colValue = $$('.inputNormalMatrixCol')[0].value;
+		let index = -1;
+		const firstMatrixInputValues = new Array(+rowValue).fill(0).map(() =>
+			new Array(+colValue).fill(0).map(() => {
+				index++;
+				return +$$('.divDisplayMatrixContainer')[0].querySelectorAll('input')[index].value;
+			})
+		);
+
+		return firstMatrixInputValues;
+	},
+	getSecondMatrixInputValue() {
+		const rowValue = $$('.inputNormalMatrixRow')[1].value;
+		const colValue = $$('.inputNormalMatrixCol')[1].value;
+		let index = -1;
+		const secondMatrixInputValues = new Array(+rowValue).fill(0).map(() =>
+			new Array(+colValue).fill(0).map(() => {
+				index++;
+				return +$$('.divDisplayMatrixContainer')[1].querySelectorAll('input')[index].value;
+			})
+		);
+
+		return secondMatrixInputValues;
 	},
 	calcPlus() {
 		$('.buttonCalcPlus').addEventListener('click', () => {
 			this.confirmForCalcPlusOrMinus(Constants.WARNING_KEYWORD.WARNING04);
-			// ---- //
-			// input 태그들을 모두 초기화해야함
-			// input 태그들을 생성해야함
-			// input 첫번째와 두번째의 값을 합쳐 value에 넣어야함
 			CalcMatrixContainer.calcHandler &&
-				CalcMatrixContainer.printInputMatrixItems(CalcMatrixContainer.createInputCalcMatrixItems($$('.inputNormalMatrixRow')[0].value, $$('.inputNormalMatrixCol')[0].value));
+				(CalcMatrixContainer.printInputMatrixItems(CalcMatrixContainer.createInputCalcMatrixItems($$('.inputNormalMatrixRow')[0].value, $$('.inputNormalMatrixCol')[0].value)),
+				CalcMatrixContainer.calcPlusInputMatrixItems());
+			// ---- //
+			// input 첫번째와 두번째의 값을 합쳐 value에 넣어야함
 		});
 	},
 	calcMinus() {
 		$('.buttonCalcMinus').addEventListener('click', () => {
 			this.confirmForCalcPlusOrMinus(Constants.WARNING_KEYWORD.WARNING05);
+			CalcMatrixContainer.calcHandler &&
+				(CalcMatrixContainer.printInputMatrixItems(CalcMatrixContainer.createInputCalcMatrixItems($$('.inputNormalMatrixRow')[0].value, $$('.inputNormalMatrixCol')[0].value)),
+				CalcMatrixContainer.calcMinusInputMatrixItems());
 			// ---- //
-			// input 태그들을 모두 초기화해야함
-			// input 태그들을 생성해야함
-			// input 첫번째에서 두번째의 값을 빼서 value에 넣어야함
-			CalcMatrixContainer.printInputMatrixItems(CalcMatrixContainer.createInputCalcMatrixItems($$('.inputNormalMatrixRow')[0].value, $$('.inputNormalMatrixCol')[0].value));
+			// input 첫번째와 두번째의 값을 빼서 value에 넣어야함
 		});
 	},
 	calcMultiply() {
